@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wes Biggs · wbig.gs</title>
+  <meta name="description" content="Wes Biggs: founder, architect, and C64 tinkerer. Open source projects in AI, retrocomputing, and the decentralized web.">
+  <meta name="theme-color" content="#0c0a1d">
+  <meta property="og:title" content="Wes Biggs · wbig.gs">
+  <meta property="og:description" content="Breaking builds since 1985. AI, Commodore 64, and the open social web.">
+  <meta property="og:url" content="https://wbig.gs/">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Space+Grotesk:wght@400;500;700&family=VT323&family=Press+Start+2P&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="booting">
+
+  <!-- ░░ BOOT SEQUENCE ░░ -->
+  <div id="boot" class="boot" role="dialog" aria-label="Commodore 64 style boot screen">
+    <div class="crt">
+      <div class="crt__screen">
+        <pre id="bootText"></pre>
+      </div>
+      <form id="bootForm" class="boot__form" autocomplete="off">
+        <input id="bootInput" class="boot__input" aria-label='Type a BASIC command, such as LOAD"WES",8,1 and then RUN'
+          autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" maxlength="80">
+      </form>
+    </div>
+    <div class="boot__bar">
+      <p class="boot__hint" id="bootHint"></p>
+      <button type="button" class="boot__skip" id="bootSkip">Skip ›</button>
+    </div>
+  </div>
+
+  <a class="skip-link" href="#portals">Skip to projects</a>
+
+  <!-- ░░ HERO ░░ -->
+  <header class="hero" id="top">
+    <canvas id="raster" class="hero__raster" aria-hidden="true"></canvas>
+    <div class="hero__inner">
+      <h1 class="hero__name" id="name" aria-label="wbig.gs: Wes Biggs">wbig.gs</h1>
+      <div class="hero__body">
+        <div class="hero__text">
+      <p class="hero__line">
+        I <span id="role" class="role">break builds</span><span class="caret">▍</span>
+      </p>
+      <p class="hero__intro">
+        Coder since the 8-bit days. I've co-founded a mobile ad exchange, founded a wallet startup that Snap bought,
+        and helped write a protocol for a social web nobody owns. By day I'm CTO at
+        <a href="https://zenivize.com" class="inline-link">Zenivize</a>, putting brand promotions into mobile wallets.
+        By night I'm running AI models on my desk and teaching a Commodore 64 to talk to them.
+      </p>
+      <nav class="hero__links" aria-label="Elsewhere">
+        <a href="https://github.com/wesbiggs" class="pill pill--gh">GitHub</a>
+        <a href="https://www.linkedin.com/in/wesleybiggs" class="pill pill--li">LinkedIn</a>
+        <a href="#changelog" class="pill pill--save">CHANGELOG ↓</a>
+        <a href="#contact" class="pill pill--hi">Say hello</a>
+      </nav>
+        </div>
+        <figure class="portrait" id="portrait">
+          <button class="portrait__disc" type="button" aria-pressed="false" aria-label="Load the high-resolution photo">
+            <span class="portrait__frame">
+              <img src="assets/wes.webp" alt="Wes Biggs: bald, bearded, glasses, striped shirt, faint smile" width="720" height="720">
+              <canvas class="portrait__pixels" aria-hidden="true"></canvas>
+            </span>
+          </button>
+        </figure>
+      </div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">scroll<br>↓</div>
+  </header>
+
+  <!-- ░░ MARQUEE ░░ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marquee"></div>
+  </div>
+
+  <main>
+    <!-- ░░ PORTALS ░░ -->
+    <section class="portals" id="portals" aria-labelledby="portals-h">
+      <h2 id="portals-h" class="section-title"><span>Pick a</span> portal</h2>
+      <p class="section-sub">My open source work, sorted into worlds. A few of them wander between.</p>
+      <div class="portals__grid" id="portalGrid"></div>
+    </section>
+
+    <div id="worlds"></div>
+
+    <!-- ░░ CONTRIBUTIONS ░░ -->
+    <section class="world world--contrib" id="contrib" aria-labelledby="contrib-h">
+      <div class="world__head">
+        <p class="world__eyebrow">git push origin someone-elses-repo</p>
+        <h2 id="contrib-h" class="section-title"><span>Open source</span> contributions</h2>
+        <p class="section-sub">Projects I've sent code, specs, docs or bug reports to. Sticker size roughly tracks the project's gravity (★).</p>
+      </div>
+      <div id="contribGroups" class="contrib"></div>
+
+      <div class="vintage">
+        <h3 class="vintage__title">The Java years <small>(before GitHub)</small></h3>
+        <ul id="vintage" class="vintage__list"></ul>
+      </div>
+    </section>
+
+    <!-- ░░ PERSONAL CHANGELOG ░░ -->
+    <section class="world world--changelog" id="changelog" aria-labelledby="changelog-h">
+      <div class="world__head">
+        <p class="world__eyebrow">$ git log --reverse --oneline wes</p>
+        <h2 id="changelog-h" class="section-title"><span>Personal</span> CHANGELOG.md</h2>
+        <p class="section-sub">Every notable change since 1985, saved to whatever storage was lying around at the time. Oldest first, which breaks the convention, but so do I. Scroll sideways →</p>
+      </div>
+      <ol class="media-row" id="changelogRow" tabindex="0" aria-label="Personal changelog, 1985 to now"></ol>
+    </section>
+
+    <!-- ░░ CONTACT ░░ -->
+    <section class="world world--contact" id="contact" aria-labelledby="contact-h">
+      <div class="contact reveal">
+        <div class="contact__text">
+          <p class="world__eyebrow">ATDT WBIG.GS</p>
+          <h2 id="contact-h" class="section-title"><span>Say</span> hello</h2>
+          <p class="section-sub">I'm based in St. Louis, Missouri, by way of L.A. and London. Get in touch about AI, decentralized protocols,
+            mobile wallets, a project you'd like a hand with, or why the SID chip still sounds so good.</p>
+          <p class="contact__mailrow">
+            <a class="contact__mail" href="mailto:contact@wbig.gs">contact@wbig.gs</a>
+            <button class="contact__copy" id="copyMail" type="button">copy</button>
+          </p>
+          <p class="contact__meta">
+            <span>St. Louis, MO · <span id="stlTime">Central Time</span></span>
+            <a href="https://github.com/wesbiggs">GitHub</a>
+            <a href="https://www.linkedin.com/in/wesleybiggs">LinkedIn</a>
+          </p>
+        </div>
+        <svg class="arch" viewBox="0 0 240 240" aria-hidden="true">
+          <defs>
+            <linearGradient id="steel" x1="0" x2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#ffe066"/><stop offset="1" stop-color="#ffffff"/>
+            </linearGradient>
+          </defs>
+          <path class="arch__curve" d="M38 228 C 50 40, 190 40, 202 228" />
+          <path class="arch__river" d="M0 232 Q 60 222 120 232 T 240 232" />
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="footer">
+    <div class="footer__screen">
+      <p>READY.</p>
+      <p>
+        <a href="https://github.com/wesbiggs">GITHUB</a> ·
+        <a href="https://www.linkedin.com/in/wesleybiggs">LINKEDIN</a> ·
+        <a href="mailto:contact@wbig.gs">EMAIL</a> ·
+        <button id="jingle" class="linkish" type="button">PLAY JINGLE ♪</button> ·
+        <button id="reboot" class="linkish" type="button">REBOOT</button>
+      </p>
+      <p class="footer__egg">psst: ↑ ↑ ↓ ↓ ← → ← → B A</p>
+      <p><span class="cursor-block"></span></p>
+    </div>
+    <p class="footer__small">© <span id="yr"></span> Wes Biggs · built carefully with AI, hosted on GitHub Pages · no cookies, no trackers</p>
+  </footer>
+
+  <noscript>
+    <style>.boot{display:none}body.booting{overflow:auto}</style>
+    <p class="noscript">This page is happier with JavaScript, but everything lives at <a href="https://github.com/wesbiggs?tab=repositories">github.com/wesbiggs</a>.</p>
+  </noscript>
+
+  <script src="data.js"></script>
+  <script src="c64.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

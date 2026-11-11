@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>?FILE NOT FOUND · wbig.gs</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; height: 100%; }
+    body { background: #7c70da; display: grid; place-items: center; padding: clamp(16px, 5vw, 60px); box-sizing: border-box; font-family: "VT323", monospace; }
+    .s { background: #3e31a2; color: #7c70da; width: min(900px, 100%); min-height: 60vh; padding: 1.2em; font-size: clamp(20px, 3.4vw, 34px); line-height: 1.15; text-transform: uppercase; box-sizing: border-box; }
+    a { color: #fff; }
+    .c { display: inline-block; width: .6em; height: 1em; background: #7c70da; vertical-align: -.15em; animation: b 1s steps(1) infinite; }
+    @keyframes b { 50% { opacity: 0 } }
+  </style>
+</head>
+<body>
+  <main class="s">
+    <p>LOAD"<span id="p"></span>",8,1</p>
+    <p>SEARCHING FOR <span id="p2"></span></p>
+    <p>?FILE NOT FOUND  ERROR</p>
+    <p>READY.</p>
+    <p>LOAD"<a href="/">HOME</a>",8,1</p>
+    <p><span class="c"></span></p>
+  </main>
+  <script>
+    const p = decodeURIComponent(location.pathname.replace(/^\//, "")).slice(0, 24).toUpperCase() || "?";
+    document.getElementById("p").textContent = p;
+    document.getElementById("p2").textContent = p;
+  </script>
+</body>
+</html>
