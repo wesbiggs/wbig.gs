@@ -1,0 +1,15 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1"
+  ],
+  "id": "did:web:wbig.gs",
+  "assertionMethod": [
+    {
+      "@context": "https://w3id.org/security/multikey/v1",
+      "id": "did:web:wbig.gs#z6MktSye633RtAzMoPYhu599QjYncDL1kom8FhYZrexEn6FW",
+      "type": "Multikey",
+      "controller": "did:web:wbig.gs",
+      "publicKeyMultibase": "z6MktSye633RtAzMoPYhu599QjYncDL1kom8FhYZrexEn6FW"
+    }
+  ]
+}
