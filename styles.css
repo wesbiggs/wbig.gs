@@ -1,4 +1,12 @@
 /* ───────────────────────── wbig.gs ───────────────────────── */
+/* C64 Pro Mono by Style (https://style64.org/c64-truetype). Per its license,
+   the font files must keep their original filenames. */
+@font-face {
+  font-family: "C64 Pro Mono";
+  src: url("assets/fonts/C64_Pro_Mono-STYLE.woff2") format("woff2"),
+       url("assets/fonts/C64_Pro_Mono-STYLE.woff") format("woff");
+  font-display: swap;
+}
 :root {
   --bg: #0c0a1d;
   --bg-2: #15112e;
@@ -24,6 +32,7 @@
   --display: "Bricolage Grotesque", "Space Grotesk", system-ui, sans-serif;
   --body: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --retro: "VT323", ui-monospace, monospace;
+  --c64: "C64 Pro Mono", var(--retro);
   --marker: "Permanent Marker", "Comic Sans MS", cursive;
 
   --radius: 22px;
@@ -77,6 +86,9 @@ img { max-width: 100%; }
     0 0 120px rgba(124, 112, 218, 0.35);
   position: relative;
   overflow: hidden;
+  /* the border is whatever is left around a 320x200 (8:5) screen */
+  container-type: size;
+  display: grid; place-items: center;
 }
 .crt::after { /* scanlines + vignette */
   content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -86,13 +98,13 @@ img { max-width: 100%; }
   mix-blend-mode: multiply;
 }
 .crt__screen {
-  height: 100%;
+  width: min(100cqw, 160cqh);
+  aspect-ratio: 8 / 5;
   container-type: size;
   background: var(--c64-blue);
   color: var(--c64-light);
-  /* 40 columns x 25 rows of square 8x8 cells, scaled to whatever size the screen is */
-  font-family: "Press Start 2P", var(--retro);
-  padding: 2.5% 3%;
+  /* exactly 40 columns x 25 rows of square 8x8 cells, flush with the border */
+  font-family: var(--c64);
   overflow: hidden;
   text-shadow: 0 0 4px rgba(124, 112, 218, 0.7);
   animation: flicker 0.12s infinite alternate;
@@ -102,7 +114,7 @@ img { max-width: 100%; }
   font-size: min(calc(100cqw / 40), calc(100cqh / 25)); line-height: 1;
 }
 .crt__screen .cur {
-  display: inline-block; width: 0.6em; height: 1em; vertical-align: -0.12em;
+  display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em;
   background: currentColor; animation: blink 1s steps(1) infinite;
 }
 @keyframes flicker { from { opacity: .97 } to { opacity: 1 } }
@@ -430,10 +442,11 @@ img { max-width: 100%; }
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 1px, transparent 1px 3px);
 }
-.world--c64 .section-title, .world--c64 .card__name { font-family: var(--retro); font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
-.world--c64 .section-title { font-size: clamp(48px, 9vw, 110px); line-height: .85; }
+.world--c64 .section-title, .world--c64 .card__name { font-family: var(--c64); font-weight: 400; text-transform: uppercase; letter-spacing: 0; }
+.world--c64 .section-title { font-size: clamp(32px, 6vw, 72px); line-height: 1; }
+.world--c64 .section-title span { font-weight: 400; margin-bottom: .5em; }
 .world--c64 .section-sub, .world--c64 .card__desc { color: #b9b1ff; }
-.world--c64 .world__eyebrow { color: #fff; }
+.world--c64 .world__eyebrow { color: #fff; font-family: var(--c64); font-size: 14px; letter-spacing: 0; }
 .raster-strip { height: 14px; margin: 0 0 30px; background: linear-gradient(90deg, #000 0 4%, #880000 4% 12%, #dd8855 12% 22%, #eeee77 22% 34%, #aaff66 34% 46%, #00cc55 46% 56%, #aaffee 56% 66%, #0088ff 66% 78%, #cc44cc 78% 88%, #ff7777 88% 96%, #000 96%); background-size: 200% 100%; animation: slide 6s linear infinite; image-rendering: pixelated; }
 .world--c64 .card {
   --accent: #fff;
@@ -443,13 +456,13 @@ img { max-width: 100%; }
   box-shadow: 6px 6px 0 #1b1466;
 }
 .world--c64 .card:hover { border-color: #fff; box-shadow: 10px 10px 0 #1b1466; }
-.world--c64 .card__name { font-size: 30px; color: #fff; }
-.world--c64 .chip { border-color: var(--c64-light); border-radius: 0; font-family: var(--retro); font-size: 17px; padding: 0 8px; background: transparent; }
-.world--c64 .badge { font-family: var(--retro); font-size: 18px; border-radius: 0; background: #ff7777; color: #000; }
+.world--c64 .card__name { font-size: 16px; line-height: 1.25; color: #fff; }
+.world--c64 .chip { border-color: var(--c64-light); border-radius: 0; font-family: var(--c64); font-size: 11px; padding: 2px 8px; background: transparent; }
+.world--c64 .badge { font-family: var(--c64); font-size: 12px; border-radius: 0; background: #ff7777; color: #000; }
 .world--c64 .badge--frozen { background: var(--c64-cyan); }
-.world--c64 .card__stars { color: #eeee77; }
-.c64-ready { font-family: var(--retro); font-size: 26px; margin: 36px 0 0; text-transform: uppercase; }
-.c64-ready .cur { display: inline-block; width: .6em; height: 1em; background: var(--c64-light); vertical-align: -.15em; animation: blink 1s steps(1) infinite; }
+.world--c64 .card__stars { color: #eeee77; font-family: var(--c64); font-size: 14px; }
+.c64-ready { font-family: var(--c64); font-size: 24px; margin: 36px 0 0; text-transform: uppercase; }
+.c64-ready .cur { display: inline-block; width: 1em; height: 1em; background: var(--c64-light); vertical-align: -.125em; animation: blink 1s steps(1) infinite; }
 
 /* Decentralized world: a graph nobody owns */
 .world--dweb { background: radial-gradient(ellipse at 70% 20%, #06302d 0%, transparent 60%), #071a1c; }
@@ -536,20 +549,30 @@ img { max-width: 100%; }
 }
 .media__year { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 8px; }
 .media__year span { font-family: var(--marker); font-size: 24px; line-height: 1; white-space: nowrap; }
-.media__year small { font-family: var(--retro); font-size: 16px; opacity: .65; white-space: nowrap; }
 .media__text { font-size: 14px; line-height: 23px; margin: 6px 0 0; font-weight: 500; }
 .media__text a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 2px; }
 
+/* Floppies are square: wider card, art takes whatever height the label leaves */
+.media--floppy525, .media--floppy35 { width: 320px; aspect-ratio: 1; min-height: 0; }
+.media--floppy525 .media__art, .media--floppy35 .media__art { flex: 1 1 0; min-height: 0; height: auto; }
+.media--floppy525 .media__label, .media--floppy35 .media__label { flex: 0 0 auto; }
+
 /* 5¼" floppy: floppy and actually floppy. Label on top, hub & read slot below */
 .media--floppy525 { background: #19171f; border-radius: 3px; box-shadow: inset 0 0 0 2px #2a2733, 0 10px 30px rgba(0,0,0,.4); }
-.media--floppy525 .media__art { order: 2; height: 150px; }
+/* hub, index hole and read slot sit at fixed spots on the disk, whatever the label's size;
+   the hub is dead center, so the label has to fit in the top third */
+.media--floppy525 { padding: 12px; }
+.media--floppy525 .media__label { padding: 5px 9px 7px; background-image: repeating-linear-gradient(transparent 0 15px, rgba(0,0,0,.12) 15px 16px); background-position: 0 24px; }
+.media--floppy525 .media__year span { font-size: 18px; }
+.media--floppy525 .media__text { font-size: 11px; line-height: 16px; margin-top: 3px; }
+.media--floppy525 .media__art { order: 2; position: static; }
 .f525__hub {
-  position: absolute; left: 50%; top: 18px; width: 64px; height: 64px; translate: -50% 0; border-radius: 50%;
-  background: radial-gradient(circle, var(--bg) 0 15px, #8f8a6e 16px 22px, #0e0d12 23px 31px, #2a2733 32px);
+  position: absolute; left: 50%; top: 50%; width: 28%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  background: radial-gradient(circle closest-side, var(--bg) 0 47%, #8f8a6e 50% 69%, #0e0d12 72% 97%, #2a2733 100%);
 }
-.f525__index { position: absolute; left: calc(50% + 46px); top: 40px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); }
-.f525__slot { position: absolute; left: 50%; top: 92px; width: 26px; height: 56px; translate: -50% 0; border-radius: 13px; background: #6b5f4b; box-shadow: inset 0 0 0 4px #0e0d12; }
-.media--floppy525::after { content: ""; position: absolute; right: 0; top: 46%; width: 9px; height: 22px; background: var(--bg); } /* write-protect notch */
+.f525__index { position: absolute; left: 69%; top: 46%; width: 3.5%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: var(--bg); }
+.f525__slot { position: absolute; left: 50%; top: 68%; bottom: 5%; width: 10%; translate: -50% 0; border-radius: 999px; background: #6b5f4b; box-shadow: inset 0 0 0 4px #0e0d12; }
+.media--floppy525::after { content: ""; position: absolute; right: 0; top: 14%; width: 9px; height: 22px; background: var(--bg); } /* write-protect notch */
 
 /* 3½" floppy: the save icon, in the flesh */
 .media--floppy35 { background: #1b1a24; clip-path: polygon(0 0, 90% 0, 100% 6%, 100% 100%, 0 100%); border-radius: 6px; box-shadow: inset 0 0 0 2px #2c2938; }
@@ -648,8 +671,11 @@ img { max-width: 100%; }
 
 /* ───────── C64 mode (Konami code) ───────── */
 body.c64-mode, body.c64-mode * {
-  font-family: var(--retro) !important;
+  font-family: var(--c64) !important;
+  letter-spacing: 0 !important;
 }
+/* C64 Pro Mono is 2.5x wider than VT323; shrink it so the page keeps its shape */
+body.c64-mode { font-size-adjust: cap-height 0.5; }
 body.c64-mode { text-transform: uppercase; background: var(--c64-blue); border: clamp(10px, 3vw, 36px) solid var(--c64-light); }
 body.c64-mode .hero__name { letter-spacing: 0; font-weight: 400; }
 body.c64-mode .world:not(.world--c64), body.c64-mode .world--contrib, body.c64-mode .vintage { background: var(--c64-blue); color: var(--c64-light); }
@@ -673,6 +699,7 @@ body.c64-mode .section-sub, body.c64-mode .card__desc { color: #b9b1ff; }
   .portal__label { font-size: 16px; }
   .cards { grid-template-columns: 1fr; }
   .media { width: 230px; }
+  .media--floppy525, .media--floppy35 { width: 290px; }
   .world { padding-top: 64px; padding-bottom: 64px; }
 }
 

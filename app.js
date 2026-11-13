@@ -159,12 +159,11 @@
       return `<svg viewBox="0 0 200 110" aria-hidden="true"><g class="nn__lines">${lines}</g><g class="nn__dots">${dots}</g></svg>`;
     })(),
   };
-  const MEDIA_NAME = { floppy525: '5¼" floppy', floppy35: '3½" floppy', hdd: "hard drive", cloud: "the cloud", chain: "a blockchain", neural: "a neural net" };
   $("#changelogRow").innerHTML = S.changelog.map((s, i) => `
     <li class="media media--${s.media}" style="--label:${s.color}">
       <div class="media__art">${ART[s.media] || ""}</div>
       <div class="media__label">
-        <div class="media__year"><span>## [${esc(s.year)}]</span><small>${MEDIA_NAME[s.media] || ""}</small></div>
+        <div class="media__year"><span>## [${esc(s.year)}]</span></div>
         <p class="media__text"><b>${s.link ? `<a href="${esc(s.link)}">${esc(s.label)}</a>` : esc(s.label)}</b> · ${esc(s.text)}</p>
       </div>
     </li>`).join("");
